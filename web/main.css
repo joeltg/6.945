@@ -1,0 +1,19 @@
+html, body {
+	margin: 0;
+	height: 100%;
+}
+
+.root {
+	height: 100%;
+	display: flex;
+}
+
+.codemirror-container {
+	background-color: red;
+	flex: 1;
+}
+
+.display {
+	background-color: blue;
+	flex: 1;
+}
