@@ -15,8 +15,16 @@ import 'codemirror/addon/edit/matchbrackets'
 import 'codemirror/addon/comment/comment'
 
 
+const initialVal = `(define demo (g9
+    (('a 7) ('b 8) ('c 1))
+    (lambda (a b c draw)
+        (draw 'circle a (+ b a) 'circle1)
+        (draw 'circle (+ a c) (+ c b) 'circle2))
+    (lambda (renderables desire)
+        (map (jsrender desire) renderables))))`
+
 const cmoptions = {
-    value: "(+ 1 1)\n",
+    value: initialVal,
     mode:  "scheme",
     theme: 'monokai',
     indentUnit: 4,
@@ -27,4 +35,8 @@ const cmoptions = {
 }
 
 
-CodeMirror(document.querySelector('.codemirror-container'), cmoptions)
+var cm = CodeMirror(document.querySelector('.codemirror-container'), cmoptions)
+
+cm.setOption('extraKeys', {
+    "Tab": "indentMore"
+})
