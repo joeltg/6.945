@@ -9,11 +9,12 @@ html, body {
 }
 
 .codemirror-container {
-	background-color: red;
+	background-color: #ddd;
 	flex: 1;
+	height: 100%;
 }
 
 .display {
-	background-color: blue;
+	background-color: #fff;
 	flex: 1;
 }
