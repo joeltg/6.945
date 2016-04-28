@@ -18,6 +18,7 @@
   "homepage": "https://github.com/joeltg/6.945#readme",
   "dependencies": {
     "codemirror": "^5.14.2",
+    "lodash": "^4.11.1",
     "postcss-scss": "^0.1.7"
   },
   "devDependencies": {
