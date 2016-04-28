@@ -36,12 +36,16 @@ const cmoptions = {
     matchBrackets: true,
 }
 
+function evalcm(cm) {
+  var res = EVAL(cm.getValue())
+  console.log(res)
+  document.querySelector('.display').innerText = res
+}
 
 var cm = CodeMirror(document.querySelector('.codemirror-container'), cmoptions)
 
 cm.setOption('extraKeys', {
     "Tab": "indentMore",
-    "Cmd-Enter": (cm) => {
-        document.querySelector('.display').innerText = EVAL(cm.getValue())
-    }
-})
+    "Cmd-Enter": evalcm,
+    "Ctrl-Enter": evalcm
+});
