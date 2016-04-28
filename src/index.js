@@ -32,12 +32,14 @@ const cmoptions = {
     keyMap: 'sublime',
     autoCloseBrackets: true,
     matchBrackets: true,
-    extraKeys: {
-        Tab: "indentMore"
-    }
 }
 
 
 var cm = CodeMirror(document.querySelector('.codemirror-container'), cmoptions)
 
-cm.setOption()
+cm.setOption('extraKeys', {
+    "Tab": "indentMore",
+    "Cmd-Enter": (cm) => {
+        document.querySelector('.display').innerText = EVAL(cm.getValue())
+    }
+})
