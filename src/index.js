@@ -33,8 +33,10 @@ const cmoptions = {
     matchBrackets: true,
 }
 
+const Interpreter = new BiwaScheme.Interpreter()
+
 function evalcm(cm) {
-  var res = BiwaScheme.Interpreter.read(cm.getValue())
+  var res = Interpreter.evaluate(cm.getValue())
   console.log(res)
   document.querySelector('.display').innerText = res
 }
