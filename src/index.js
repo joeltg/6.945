@@ -14,9 +14,6 @@ import 'codemirror/addon/edit/matchbrackets'
 
 import 'codemirror/addon/comment/comment'
 
-import test from './test.scm';
-EVAL(test)
-
 const initialVal = `(define demo (g9
     (('a 7) ('b 8) ('c 1))
     (lambda (a b c draw)
@@ -37,7 +34,7 @@ const cmoptions = {
 }
 
 function evalcm(cm) {
-  var res = EVAL(cm.getValue())
+  var res = BiwaScheme.Interpreter.read(cm.getValue())
   console.log(res)
   document.querySelector('.display').innerText = res
 }
@@ -47,5 +44,6 @@ var cm = CodeMirror(document.querySelector('.codemirror-container'), cmoptions)
 cm.setOption('extraKeys', {
     "Tab": "indentMore",
     "Cmd-Enter": evalcm,
-    "Ctrl-Enter": evalcm
+    "Ctrl-Enter": evalcm,
+    "Shift-Enter": evalcm
 });
