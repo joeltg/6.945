@@ -14,6 +14,8 @@ import 'codemirror/addon/edit/matchbrackets'
 
 import 'codemirror/addon/comment/comment'
 
+import test from './test.scm';
+EVAL(test)
 
 const initialVal = `(define demo (g9
     (('a 7) ('b 8) ('c 1))
