@@ -24,6 +24,9 @@ module.exports = {
     }, {
       test: /\.css$/,
       loader: "style-loader!css-loader!postcss-loader?parser=postcss-scss",
+    }, {
+      test: /\.scm/,
+      loader: "raw-loader",
     }]
   },
   node: {
