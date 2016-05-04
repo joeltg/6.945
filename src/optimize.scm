@@ -36,21 +36,37 @@
   (multidimensional-minimize f vals))
 
 (define bfgs-estimate 0.4)
-(define bfgs-epsilon 0.001)
+(define bfgs-epsilon 0.0001)
 (define bfgs-maxiter 1000)
 
-(define (bfgs-min f vals)
-  (let ((f (compose f vector->list)))
+;(define (bfgs-min f vals)
+;  (let ((f (compose f vector->list)))
+;    (let ((result
+;            (dfp f
+;              (compose down->vector (D f))
+;              (list->vector vals)
+;              bfgs-estimate
+;              bfgs-epsilon
+;              bfgs-maxiter)))
+;      (if (eq? 'ok (car result))
+;    	  (vector->list (caadr result))
+;    	  (error "Minimizer did not converge")))))
+
+
+(define (bfgs-min f parameters)
+  (let ((f (compose f (vector->parameters parameters))))
     (let ((result
-            (bfgs f
-              (compose down->vector (D f))
-              (list->vector vals)
-              bfgs-estimate
-              bfgs-epsilon
-              bfgs-maxiter)))
-      (if (eq? 'ok (car result))
-    	  (vector->list (caadr result))
-    	  (error "Minimizer did not converge")))))
+      (bfgs f
+        (compose down->vector (D f))
+        (parameters->vector parameters)
+        bfgs-estimate
+        bfgs-epsilon
+        bfgs-maxiter)))
+        (if (eq? 'ok (car result))
+	  ((vector->parameters parameters)
+	   (caadr result))
+	  (error "Minimizer did not converge")))))
+
 
 (define (optimize:numeric data->renderables
                           current-data
@@ -62,7 +78,7 @@
               (sse
                 desired-renderable
                 (assq key (data->renderables (map list data-keys vals)))))))
-    (map list data-keys (simplex-min f data-vals)))))
+    (map list data-keys (bfgs-min f data-vals)))))
 
 
 (define (data->renderables data)
