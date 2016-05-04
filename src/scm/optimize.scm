@@ -30,9 +30,9 @@
   (let iter ((r1 (cadr r1)) (r2 (cadr r2)) (sum 0))
     (if (null? r1)
       sum
-      (let* ((key (caar r1)) (val1 (cadar r1)) (val2 (cadr (assq key r2))))
+      (let* ((key (caar r1)) (val1 (cadar r1)) (val2 (assq key r2)))
         (if val2
-          (iter (cdr r1) r2 (+ sum (abs (square (delta val1 val2)))))
+          (iter (cdr r1) r2 (+ sum (abs (square (delta val1 (cadr val2))))))
           (iter (cdr r1) r2 sum))))))
 
 (define (simplex-min f vals)
