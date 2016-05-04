@@ -25,11 +25,13 @@ module.exports = {
       test: /\.css$/,
       loader: "style-loader!css-loader!postcss-loader?parser=postcss-scss",
     }, {
-      test: /\.scm/,
+      test: /\.scm$/,
       loader: "raw-loader",
     }]
   },
   node: {
-    fs: "empty"
+    fs: "empty",
+    net: "empty",
+    // fsevents: "empty"
   }
 };
