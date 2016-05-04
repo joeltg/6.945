@@ -43,15 +43,19 @@
 (define (simplex-min f vals)
   (multidimensional-minimize f vals))
 
-(define bfgs-estimate 0.4)
-(define bfgs-epsilon 0.001)
+(define bfgs-estimate 0.1)
+(define bfgs-epsilon 0.1)
 (define bfgs-maxiter 1000)
+
+(define nelder-start-step .01)
+(define nelder-epsilon 1.0e-10)
+(define nelder-maxiter 1000)
 
 (define (bfgs-min f vals)
   (let ((f (compose f vector->list)))
     (let ((result
             (bfgs f
-              (compose down->vector (D f))
+              '()
               (list->vector vals)
               bfgs-estimate
               bfgs-epsilon
@@ -70,14 +74,16 @@
               (sse
                 desired-renderable
                 (assq key (data->renderables (map list data-keys vals)))))))
-    (map list data-keys (simplex-min f data-vals)))))
+    (pp "about to compute result")
+    (map list data-keys (bfgs-min f data-vals)))))
 
 
 ;(define (data->renderables data)
-;  `((handle ((type circle) (radius 2) (x-pos ,(log (cadr (assq 'x data))))))
-;    (bar ((type line) (start 0) (color red)))))
-
-;(define current-data `((x 4) (y 10)))
-;(define desired-renderable '(handle  ((type circle) (radius 2) (x-pos 5))))
-
-;(optimize:numeric data->renderables current-data desired-renderable)
+;  `((handle ((x-pos ,(square (cadr (assq 'x data))))))))
+;
+;(define current-data `((x 2)))
+;(define desired-renderable '(handle  ((x-pos 5))))
+;
+;(define opt (optimize:numeric data->renderables current-data desired-renderable))
+;(pp (data->renderables opt))
+;opt
