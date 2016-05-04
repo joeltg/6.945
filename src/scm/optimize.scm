@@ -16,10 +16,13 @@
       result
       (let* ((key (caar alist))
              (collect (map (lambda (l) (assq key l)) alists)))
+          (pp key)
+          (pp alist)
           (if (any not collect)
             (iter (cdr alist) result)
-            (let* ((values (cons (car alist) (map cadar collect)))
+            (let* ((values (cons (cadar alist) (map cadr collect)))
                    (new-result (cons (list key (apply f values)) result)))
+              (pp values)
               (iter (cdr alist) new-result)))))))
 
 
