@@ -5,10 +5,17 @@
 
 (define delta:numeric -)
 
+(define (delta:list a b)
+  (sum-square (map delta a b)))
+
 (define delta (make-generic-operator 2 'delta delta:symbolic))
 
 (defhandler delta delta:numeric number? number?)
 
+(defhandler delta delta:list list? list?)
+
+(define (sum-square l)
+  (fold + 0 (map square l)))
 
 (define (map-assq f alist . alists)
   (let iter ((alist alist) (result '()))
