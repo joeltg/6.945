@@ -23,8 +23,6 @@
       result
       (let* ((key (caar alist))
              (collect (map (lambda (l) (assq key l)) alists)))
-          (pp key)
-          (pp alist)
           (if (any not collect)
             (iter (cdr alist) result)
             (let* ((values (cons (cadar alist) (map cadr collect)))
@@ -39,7 +37,7 @@
       sum
       (let* ((key (caar r1)) (val1 (cadar r1)) (val2 (assq key r2)))
         (if val2
-          (iter (cdr r1) r2 (+ sum (abs (square (delta val1 (cadr val2))))))
+          (iter (cdr r1) r2 (+ sum (magnitude (square (delta val1 (cadr val2))))))
           (iter (cdr r1) r2 sum))))))
 
 (define (simplex-min f vals)
