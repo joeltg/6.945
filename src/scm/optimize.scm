@@ -32,7 +32,7 @@
       sum
       (let* ((key (caar r1)) (val1 (cadar r1)) (val2 (cadr (assq key r2))))
         (if val2
-          (iter (cdr r1) r2 (+ sum (square (delta val1 val2))))
+          (iter (cdr r1) r2 (+ sum (abs (square (delta val1 val2)))))
           (iter (cdr r1) r2 sum))))))
 
 (define (simplex-min f vals)
