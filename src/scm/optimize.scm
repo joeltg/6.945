@@ -45,11 +45,11 @@
 
 (define bfgs-estimate 0.1)
 (define bfgs-epsilon 0.1)
-(define bfgs-maxiter 1000)
+(define bfgs-maxiter 100)
 
 (define nelder-start-step .01)
-(define nelder-epsilon 1.0e-10)
-(define nelder-maxiter 1000)
+(define nelder-epsilon 0.1)
+(define nelder-maxiter 10)
 
 (define (bfgs-min f vals)
   (let ((f (compose f vector->list)))
@@ -75,7 +75,7 @@
                 desired-renderable
                 (assq key (data->renderables (map list data-keys vals)))))))
     (pp "about to compute result")
-    (map list data-keys (bfgs-min f data-vals)))))
+    (map list data-keys (simplex-min f data-vals)))))
 
 
 ;(define (data->renderables data)

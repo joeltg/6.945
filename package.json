@@ -19,7 +19,8 @@
   "dependencies": {
     "codemirror": "^5.14.2",
     "lodash": "^4.11.1",
-    "postcss-scss": "^0.1.7"
+    "postcss-scss": "^0.1.7",
+    "s-expression": "^3.0.3"
   },
   "devDependencies": {
     "babel": "^6.5.2",

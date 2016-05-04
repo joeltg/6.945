@@ -50,14 +50,14 @@ export class line extends element {
 
     renderEl(c, renderables) {
 
-        var d1 = renderables[c.d1]
-        var d2 = renderables[c.d2]
+        var start = renderables[c.start]
+        var end = renderables[c.end]
 
         this.el.attr({
-            x1:clamp(d1.x, d1.xmin, d1.xmax),
-            y1:clamp(d1.y, d1.ymin, d1.ymax),
-            x2:clamp(d2.x, d2.xmin, d2.xmax),
-            y2:clamp(d2.y, d2.ymin, d2.ymax),
+            x1:clamp(start.x, start.xmin, start.xmax),
+            y1:clamp(start.y, start.ymin, start.ymax),
+            x2:clamp(end.x, end.xmin, end.xmax),
+            y2:clamp(end.y, end.ymin, end.ymax),
         })
     }
 }
