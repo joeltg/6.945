@@ -1,50 +1,24 @@
 import './main.css'
-
-import 'lodash'
-
-import CodeMirror from 'codemirror'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/monokai.css'
-import './theme.css'
-
-import 'codemirror/mode/scheme/scheme'
-
-import 'codemirror/keymap/sublime'
-
-import 'codemirror/addon/edit/closebrackets'
-import 'codemirror/addon/edit/matchbrackets'
-import 'codemirror/addon/comment/comment'
+import Editor from './editor'
 
 import Renderer from './render'
 
-const initialVal = `(define demo (g9
-    (('a 7) ('b 8) ('c 1))
-    (lambda (a b c draw)
-        (draw 'circle a (+ b a) 'circle1)
-        (draw 'circle (+ a c) (+ c b) 'circle2))
-    (lambda (renderables desire)
-        (map (jsrender desire) renderables))))`
+var ws = new WebSocket('ws://localhost:1947')
+var RENDERABLES_REGEX = /::begin-renderables::(.*)::end-renderables::/
 
-const cmoptions = {
-    value: initialVal,
-    mode:  "scheme",
-    theme: 'monokai',
-    indentUnit: 4,
-    indentWithTabs: false,
-    keyMap: 'sublime',
-    autoCloseBrackets: true,
-    matchBrackets: true,
+ws.onmessage = e => {
+    console.log(e.data)
+    var match = RENDERABLES_REGEX.exec(e.data)
+    if(match){
+        console.log(match)
+    }
 }
 
-const Interpreter = new BiwaScheme.Interpreter()
+var cm = Editor(document.querySelector('.codemirror-container'))
 
 function evalcm(cm) {
-  var res = Interpreter.evaluate(cm.getValue())
-  console.log(res)
-  document.querySelector('.display').innerText = res
+    ws.send(cm.getValue())
 }
-
-var cm = CodeMirror(document.querySelector('.codemirror-container'), cmoptions)
 
 cm.setOption('extraKeys', {
     "Tab": "indentMore",
@@ -53,12 +27,15 @@ cm.setOption('extraKeys', {
     "Shift-Enter": evalcm
 });
 
+ws.onopen = () => {
+    ws.send('(load "prelude")')
+}
 
+// var circle = (x, y) => ({x, y, type:'circle', xmin:-Infinity, xmax:Infinity, ymin:-Infinity, ymax:Infinity})
 
-var circle = (x, y) => ({x, y, type:'circle', xmin:-Infinity, xmax:Infinity, ymin:-Infinity, ymax:Infinity})
+// var renderer = new Renderer((id,x,y)=>renderer.render({[id]: circle(x,y)}))
 
-var renderer = new Renderer((id,x,y)=>renderer.render({[id]: circle(x,y)}))
-renderer.insertInto('.display')
-renderer.render({
-    a: {type:'circle', x:20, y:20, xmin:-Infinity, xmax:Infinity, ymin:-Infinity, ymax:Infinity}
-})
+// renderer.insertInto('.display')
+// renderer.render({
+//     a: {type:'circle', x:20, y:20, xmin:-Infinity, xmax:Infinity, ymin:-Infinity, ymax:Infinity}
+// })
