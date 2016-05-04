@@ -1,4 +1,3 @@
-(load "renderable.scm")
 (load "optimize.scm")
 
 (define (g9 initial-data data->renderables renderer on-data-update)
@@ -7,7 +6,7 @@
 
   (define (on-renderable-update desired-renderable)
     (let* ((id (car desired-renderable))
-           (current-renderable (get-renderable-by-id id current-renderables))
+           (current-renderable (assq id current-renderables))
            (optimized-data (optimize data->renderables
                                      current-data
                                      current-renderable
